@@ -35,9 +35,6 @@ import ldcr.BridgeingAnalyzer.Cmmands.StuckCommand;
 import ldcr.BridgeingAnalyzer.Cmmands.VillagerSpawnPointCommand;
 import ldcr.BridgeingAnalyzer.Utils.NoAIUtils;
 import ldcr.BridgeingAnalyzer.Utils.Util;
-import ldcr.BridgeingAnalyzer.hook.duel.DuelHook;
-import ldcr.BridgeingAnalyzer.hook.duel.IDuelHook;
-import ldcr.BridgeingAnalyzer.hook.duel.NoDuelHook;
 import ldcr.BridgeingAnalyzer.hook.skin.ISkinHook;
 import ldcr.BridgeingAnalyzer.hook.skin.NoSkinHook;
 import ldcr.BridgeingAnalyzer.hook.skin.SkinHook;
@@ -200,7 +197,6 @@ public class BridgingAnalyzer extends JavaPlugin implements Listener {
 			    }
 			}
 			//BridgingAnalyzer.clearEffect(last);
-			duelHook.onKill((Player) e.getEntity(), last);
 
 		    } catch (final Exception ex) {}
 		    finally {
@@ -227,7 +223,6 @@ public class BridgingAnalyzer extends JavaPlugin implements Listener {
 	Bukkit.getConsoleSender().sendMessage("§b[BridgingAnalyzer] §a方块清除完毕.");
     }
     private static ISkinHook skinHook;
-    private static IDuelHook duelHook;
     @Override
     public void onEnable() {
 	instance = this;
@@ -236,11 +231,6 @@ public class BridgingAnalyzer extends JavaPlugin implements Listener {
 	    skinHook = new SkinHook();
 	} else {
 	    skinHook = new NoSkinHook();
-	}
-	if (Bukkit.getPluginManager().isPluginEnabled("RodDuel")) {
-	    duelHook = new DuelHook();
-	} else {
-	    duelHook = new NoDuelHook();
 	}
 
 	Bukkit.getPluginManager().registerEvents(this, this);
