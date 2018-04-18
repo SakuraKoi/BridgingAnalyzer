@@ -1,0 +1,28 @@
+name: BridgingAnalyzer
+main: ldcr.BridgeingAnalyzer.BridgingAnalyzer
+version: 1.0.0
+author: Ldcr
+softdepend: ["BridgingSkin","RodDuel"]
+commands:
+  bridge:
+    description: Bridging Analyzer Config
+    usage: /bridge
+  fbc:
+    description: boardcast string
+    usage: /fbc
+  clearblock:
+    description: clear placed block
+    usage: /clearblock
+  imstuck:
+    description: destroy near block
+    usage: /imstuck
+  cps:
+    description: get other player cps
+    usage: /cps
+  genvillager:
+    description: create villager spawn point
+    usage: /genvillager
+permissions:
+  bridginganalyzer.noclear:
+    description: 返回出生点时不清空装备和隐身药水的权限
+    default: op
