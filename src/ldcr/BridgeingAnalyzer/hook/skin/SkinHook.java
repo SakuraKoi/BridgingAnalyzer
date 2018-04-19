@@ -7,9 +7,9 @@ import ldcr.BridgingSkin.BridgingSkin;
 
 public class SkinHook implements ISkinHook {
 
-    @Override
-    public ItemStack getItem(final Player p) {
-	return BridgingSkin.getItem(p);
-    }
+	@Override
+	public ItemStack getItem(final Player p) {
+		return BridgingSkin.getItem(p);
+	}
 
 }

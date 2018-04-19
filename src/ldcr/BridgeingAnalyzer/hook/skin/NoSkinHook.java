@@ -6,8 +6,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class NoSkinHook implements ISkinHook {
 
-    @Override
-    public ItemStack getItem(final Player p) {
-	return new ItemStack(Material.SANDSTONE, 64);
-    }
+	@Override
+	public ItemStack getItem(final Player p) {
+		return new ItemStack(Material.SANDSTONE, 64);
+	}
 }

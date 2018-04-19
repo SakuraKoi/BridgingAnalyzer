@@ -4,5 +4,5 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public interface ISkinHook {
-    public ItemStack getItem(Player p);
+	public ItemStack getItem(Player p);
 }
