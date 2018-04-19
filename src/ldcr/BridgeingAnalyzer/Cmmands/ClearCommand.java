@@ -1,5 +1,8 @@
 package ldcr.BridgeingAnalyzer.Cmmands;
 
+import ldcr.BridgeingAnalyzer.BridgingAnalyzer;
+import ldcr.BridgeingAnalyzer.Counter;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -8,9 +11,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import ldcr.BridgeingAnalyzer.BridgingAnalyzer;
-import ldcr.BridgeingAnalyzer.Counter;
 
 public class ClearCommand implements CommandExecutor {
 
@@ -29,6 +29,7 @@ public class ClearCommand implements CommandExecutor {
 				sender.sendMessage("§b[BridgingAnalyzer] §a方块清除完毕.");
 			} else {
 				final String player = args[0];
+				@SuppressWarnings("deprecation")
 				final OfflinePlayer offp = Bukkit.getOfflinePlayer(player);
 				if (offp == null) {
 					sender.sendMessage("§b[BridgingAnalyzer] §c错误: 玩家 "

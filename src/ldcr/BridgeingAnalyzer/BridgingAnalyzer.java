@@ -57,7 +57,7 @@ public class BridgingAnalyzer extends JavaPlugin implements Listener {
 	private static void spawnVillager() {
 		for (final Entity en : Bukkit.getWorld("world").getEntities()) {
 			if (en.getType() == EntityType.VILLAGER) {
-				if (en.getCustomName().equals("靶子→_→")) {
+				if ("靶子→_→".equals(en.getCustomName())) {
 					en.remove();
 				}
 			}
