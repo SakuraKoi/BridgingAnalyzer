@@ -7,18 +7,12 @@ commands:
   bridge:
     description: Bridging Analyzer Config
     usage: /bridge
-  fbc:
-    description: boardcast string
-    usage: /fbc
   clearblock:
     description: clear placed block
     usage: /clearblock
   imstuck:
     description: destroy near block
     usage: /imstuck
-  cps:
-    description: get other player cps
-    usage: /cps
   genvillager:
     description: create villager spawn point
     usage: /genvillager
