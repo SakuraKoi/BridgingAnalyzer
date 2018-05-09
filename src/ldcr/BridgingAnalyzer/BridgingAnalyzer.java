@@ -1,4 +1,4 @@
-package ldcr.BridgeingAnalyzer;
+package ldcr.BridgingAnalyzer;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -25,19 +25,20 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import ldcr.BridgeingAnalyzer.Cmmands.BridgeCommand;
-import ldcr.BridgeingAnalyzer.Cmmands.ClearCommand;
-import ldcr.BridgeingAnalyzer.Cmmands.StuckCommand;
-import ldcr.BridgeingAnalyzer.Cmmands.VillagerSpawnPointCommand;
-import ldcr.BridgeingAnalyzer.Utils.NoAIUtils;
-import ldcr.BridgeingAnalyzer.Utils.Util;
-import ldcr.BridgeingAnalyzer.hook.skin.ISkinHook;
-import ldcr.BridgeingAnalyzer.hook.skin.NoSkinHook;
-import ldcr.BridgeingAnalyzer.hook.skin.SkinHook;
+import ldcr.BridgingAnalyzer.Cmmands.BridgeCommand;
+import ldcr.BridgingAnalyzer.Cmmands.ClearCommand;
+import ldcr.BridgingAnalyzer.Cmmands.StuckCommand;
+import ldcr.BridgingAnalyzer.Cmmands.VillagerSpawnPointCommand;
+import ldcr.BridgingAnalyzer.Utils.Util;
+import ldcr.BridgingAnalyzer.hook.skin.ISkinHook;
+import ldcr.BridgingAnalyzer.hook.skin.NoSkinHook;
+import ldcr.BridgingAnalyzer.hook.skin.SkinHook;
+import ldcr.Utils.Bukkit.NoAIUtils;
 
 public class BridgingAnalyzer extends JavaPlugin implements Listener {
     public static BridgingAnalyzer instance;
@@ -145,8 +146,6 @@ public class BridgingAnalyzer extends JavaPlugin implements Listener {
 	e.setFoodLevel(20);
     }
 
-    private HashMap<Player, Player> lastDamage;
-
     @EventHandler
     public void onPvP(final EntityDamageByEntityEvent e) {
 	if (e.isCancelled())
@@ -157,29 +156,27 @@ public class BridgingAnalyzer extends JavaPlugin implements Listener {
 	    return;
 	if (e.getEntity().getType() == EntityType.PLAYER) {
 	    if (e.getDamager().getType() == EntityType.PLAYER) {
-		onPvPDamage((Player) e.getEntity(), (Player) e.getDamager());
+		if (onPvPDamage((Player) e.getEntity(), (Player) e.getDamager())) {
+		    e.setCancelled(true);
+		}
 	    } else if (e.getDamager() instanceof Projectile) {
 		final Projectile proj = (Projectile) e.getDamager();
 		if (proj.getShooter() instanceof Player) {
-		    onPvPDamage((Player) e.getEntity(),
-			    (Player) proj.getShooter());
+		    if (onPvPDamage((Player) e.getEntity(),
+			    (Player) proj.getShooter())) {
+			e.setCancelled(true);
+		    }
 		}
 	    }
 	}
     }
 
-    private void onPvPDamage(final Player player, final Player damager) {
-	lastDamage.put(player, damager);
-	final Counter gotDamageCounter = BridgingAnalyzer.getCounter(player);
-	if (!gotDamageCounter.isDamageEnabled()) {
-	    gotDamageCounter.setDamageEnabled(true);
-	    player.sendMessage("§6§l[BridgingAnalyzer] §cHey man! 你的伤害已被自动开启!");
-	}
-	final Counter damagerCounter = BridgingAnalyzer.getCounter(damager);
-	if (!damagerCounter.isDamageEnabled()) {
-	    damagerCounter.setDamageEnabled(true);
-	    damager.sendMessage("§6§l[BridgingAnalyzer] §cHey man! 你的伤害已被自动开启!");
-	}
+    private boolean onPvPDamage(final Player player, final Player damager) {
+	if (!BridgingAnalyzer.getCounter(player).isPvPEnabled())
+	    return true;
+	if (!BridgingAnalyzer.getCounter(damager).isPvPEnabled())
+	    return true;
+	return false;
     }
 
     @EventHandler
@@ -198,36 +195,6 @@ public class BridgingAnalyzer extends JavaPlugin implements Listener {
 		Util.f__kUnknownTitleFadeBug((Player) e.getEntity(), "",
 			"§c严重伤害 - " + Util.formatDouble(e.getFinalDamage() / 2)
 			+ " ❤", 10, 20, 10);
-	    }
-	    if (c.isDamageEnabled()) {
-		if (e.isCancelled())
-		    return;
-		if ((((Player) e.getEntity()).getHealth() - e.getFinalDamage()) <= 0) {
-		    e.setDamage(0.0);
-		    c.reset();
-
-		    teleportCheckPoint((Player) e.getEntity());
-		    if (!lastDamage.containsKey(e.getEntity()))
-			return;
-		    try {
-			final Player last = lastDamage.get(e.getEntity());
-			for (final Player p : Bukkit.getOnlinePlayers()) {
-			    if (p.getWorld().equals(e.getEntity().getWorld())) {
-				p.sendMessage("§c "
-					+ last.getName()
-					+ " (§4"
-					+ Util.formatDouble(last.getHealth() / 2)
-					+ "❤§c) 锤死了 " + e.getEntity().getName());
-			    }
-			}
-			// BridgingAnalyzer.clearEffect(last);
-
-		    } catch (final Exception ex) {
-		    } finally {
-			lastDamage.remove(e.getEntity());
-		    }
-		}
-		return;
 	    }
 	    e.setDamage(0.0);
 	}
@@ -253,20 +220,17 @@ public class BridgingAnalyzer extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
 	instance = this;
-	lastDamage = new HashMap<Player, Player>();
 	if (Bukkit.getPluginManager().isPluginEnabled("BridgingSkin")) {
 	    skinHook = new SkinHook();
 	} else {
 	    skinHook = new NoSkinHook();
 	}
-
-	Bukkit.getPluginManager().registerEvents(this, this);
-	Bukkit.getPluginManager().registerEvents(new CounterListener(), this);
-	Bukkit.getPluginManager().registerEvents(
-		new WallJumpHighlightListener(), this);
-	Bukkit.getPluginManager().registerEvents(new TriggerBlockListener(),
-		this);
-
+	final PluginManager pluginManager = Bukkit.getPluginManager();
+	pluginManager.registerEvents(this, this);
+	pluginManager.registerEvents(new CounterListener(), this);
+	pluginManager.registerEvents(new HighlightListener(), this);
+	pluginManager.registerEvents(new TriggerBlockListener(),this);
+	pluginManager.registerEvents(new ResourcePackLoader(), this);
 	getCommand("bridge").setExecutor(new BridgeCommand());
 	getCommand("clearblock").setExecutor(new ClearCommand());
 	getCommand("imstuck").setExecutor(new StuckCommand());

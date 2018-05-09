@@ -1,7 +1,4 @@
-package ldcr.BridgeingAnalyzer.Cmmands;
-
-import ldcr.BridgeingAnalyzer.BridgingAnalyzer;
-import ldcr.BridgeingAnalyzer.Counter;
+package ldcr.BridgingAnalyzer.Cmmands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -11,6 +8,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import ldcr.BridgingAnalyzer.BridgingAnalyzer;
+import ldcr.BridgingAnalyzer.Counter;
 
 public class ClearCommand implements CommandExecutor {
 

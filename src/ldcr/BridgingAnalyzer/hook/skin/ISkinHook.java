@@ -1,4 +1,4 @@
-package ldcr.BridgeingAnalyzer.hook.skin;
+package ldcr.BridgingAnalyzer.hook.skin;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

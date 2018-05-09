@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/BridgingSkin"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Spigot1.8.8"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/LdcrUtils"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,4 +1,4 @@
-package ldcr.BridgeingAnalyzer.Cmmands;
+package ldcr.BridgingAnalyzer.Cmmands;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import ldcr.BridgeingAnalyzer.Counter;
+import ldcr.BridgingAnalyzer.Counter;
 
 public class StuckCommand implements CommandExecutor {
 

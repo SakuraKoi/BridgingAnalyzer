@@ -1,4 +1,4 @@
-package ldcr.BridgeingAnalyzer.Utils;
+package ldcr.BridgingAnalyzer.Utils;
 
 import org.bukkit.Sound;
 

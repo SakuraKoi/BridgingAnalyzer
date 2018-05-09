@@ -1,8 +1,9 @@
 name: BridgingAnalyzer
-main: ldcr.BridgeingAnalyzer.BridgingAnalyzer
+main: ldcr.BridgingAnalyzer.BridgingAnalyzer
 version: 1.0.0
 author: Ldcr
-softdepend: ["BridgingSkin","RodDuel"]
+softdepend: ["BridgingSkin"]
+depend: ["LdcrUtils"]
 commands:
   bridge:
     description: Bridging Analyzer Config
@@ -18,5 +19,4 @@ commands:
     usage: /genvillager
 permissions:
   bridginganalyzer.noclear:
-    description: 返回出生点时不清空装备和隐身药水的权限
     default: op

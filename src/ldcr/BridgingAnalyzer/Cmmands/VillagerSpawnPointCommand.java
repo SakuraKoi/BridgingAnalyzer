@@ -1,4 +1,4 @@
-package ldcr.BridgeingAnalyzer.Cmmands;
+package ldcr.BridgingAnalyzer.Cmmands;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
