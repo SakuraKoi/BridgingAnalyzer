@@ -7,8 +7,8 @@ import org.bukkit.material.Sandstone;
 
 public class NoSkinHook implements ISkinHook {
 
-    @Override
-    public ItemStack getItem(final Player p) {
-	return new Sandstone(SandstoneType.SMOOTH).toItemStack(64);
-    }
+	@Override
+	public ItemStack getItem(final Player p) {
+		return new Sandstone(SandstoneType.SMOOTH).toItemStack(64);
+	}
 }

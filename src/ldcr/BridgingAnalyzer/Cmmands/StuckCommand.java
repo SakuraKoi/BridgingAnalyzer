@@ -14,8 +14,7 @@ import ldcr.BridgingAnalyzer.Counter;
 public class StuckCommand implements CommandExecutor {
 
 	@Override
-	public boolean onCommand(final CommandSender sender, final Command command,
-			final String label, final String[] args) {
+	public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
 		if (!(sender instanceof Player)) {
 			sender.sendMessage("§6§l[BridgingAnalyzer] §c仅玩家可以执行.");
 			return true;

@@ -10,8 +10,7 @@ public class SoundMachine {
 			if (sound.equals(null)) {
 				sound = Sound.valueOf(v19);
 			}
-		} catch (final Exception ex) {
-		}
+		} catch (final Exception ex) {}
 		return sound;
 	}
 
