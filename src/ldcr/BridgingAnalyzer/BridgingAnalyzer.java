@@ -214,7 +214,7 @@ public class BridgingAnalyzer extends JavaPlugin implements Listener {
 		pluginManager.registerEvents(new CounterListener(), this);
 		pluginManager.registerEvents(new HighlightListener(), this);
 		pluginManager.registerEvents(new TriggerBlockListener(), this);
-		pluginManager.registerEvents(new ResourcePackLoader(), this);
+		// TODO pluginManager.registerEvents(new ResourcePackLoader(), this);
 		getCommand("bridge").setExecutor(new BridgeCommand());
 		getCommand("clearblock").setExecutor(new ClearCommand());
 		getCommand("imstuck").setExecutor(new StuckCommand());

@@ -46,7 +46,7 @@ public class CounterListener implements Listener {
 		if (e.getTo().getY() < 0) {
 			final Counter c = BridgingAnalyzer.getCounter(e.getPlayer());
 			if (c.isSpeedCountEnabled()) {
-				TitleUtils.sendTitle(e.getPlayer(), "", "§cMax - " + c.getMaxBridgeSpeed() + " block/s", 0, 100, 0);
+				TitleUtils.sendTitle(e.getPlayer(), "", "§cMax - " + c.getMaxBridgeSpeed() + " block/s", 1, 40, 1);
 			}
 			c.reset();
 			BridgingAnalyzer.teleportCheckPoint(e.getPlayer());
@@ -66,7 +66,7 @@ public class CounterListener implements Listener {
 			final Counter c = BridgingAnalyzer.getCounter(e.getPlayer());
 			c.countBridge(e.getBlock());
 			if (c.isSpeedCountEnabled()) {
-				TitleUtils.sendTitle(e.getPlayer(), "", "§b" + c.getBridgeSpeed() + " block/s", 0, 100, 0);
+				TitleUtils.sendTitle(e.getPlayer(), "", "§b" + c.getBridgeSpeed() + " block/s", 1, 40, 1);
 			}
 			Bukkit.getScheduler().runTaskLater(BridgingAnalyzer.instance, new Runnable() {
 

@@ -1,5 +1,6 @@
 package ldcr.BridgingAnalyzer;
 
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -9,12 +10,12 @@ import org.bukkit.event.player.PlayerResourcePackStatusEvent.Status;
 public class ResourcePackLoader implements Listener {
 	@EventHandler
 	public void onJoin(final PlayerJoinEvent e) {
-		/*Bukkit.getScheduler().runTaskLater(BridgingAnalyzer.instance, new Runnable() {
+		Bukkit.getScheduler().runTaskLater(BridgingAnalyzer.instance, new Runnable() {
 			@Override
 			public void run() {
 				e.getPlayer().setResourcePack("https://raw.githubusercontent.com/Ldcr993519867/FileCloud/master/BridgingHelper.zip");
 			}
-		}, 10);*/
+		}, 10);
 	}
 
 	@EventHandler
