@@ -138,11 +138,11 @@ public class TriggerBlockListener implements Listener {
 		if (e.getTo().getBlock().getRelative(BlockFace.DOWN).getType() == Material.BEACON) {
 			e.getPlayer().setNoDamageTicks(20);
 			Block to = e.getTo().getBlock();
-			while ((to.getType() == Material.AIR) && (to.getY() < 255)) {
+			while (((to.getType() == Material.AIR) || (to.getType() == Material.STAINED_GLASS_PANE) || (to.getType() == Material.WALL_SIGN) || (to.getType() == Material.SIGN_POST)) && (to.getY() < 255)) {
 				to = to.getRelative(BlockFace.UP);
 			}
 			if (to.getType() == Material.BEACON) {
-				e.getPlayer().setNoDamageTicks(40);
+				e.getPlayer().setNoDamageTicks(50);
 				final Block teleportTarget = to;
 				new TeleportRingEffect(e.getTo().getBlock().getLocation().add(0.5, 0, 0.5), teleportTarget.getLocation().add(0.5, 1.0, 0.5), 1, 0, 40) {
 
@@ -171,11 +171,15 @@ public class TriggerBlockListener implements Listener {
 		if (e.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.BEACON) {
 			e.getPlayer().setNoDamageTicks(20);
 			Block to = e.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN, 2);
-			while ((to.getType() == Material.AIR) && (to.getY() > 0)) {
+			while ((
+					(to.getType() == Material.AIR) ||
+					(to.getType() == Material.STAINED_GLASS_PANE) ||
+					(to.getType() == Material.WALL_SIGN) ||
+					(to.getType() == Material.SIGN_POST)) && (to.getY() > 0)) {
 				to = to.getRelative(BlockFace.DOWN);
 			}
 			if (to.getType() == Material.BEACON) {
-				e.getPlayer().setNoDamageTicks(40);
+				e.getPlayer().setNoDamageTicks(50);
 				final Block teleportTarget = to;
 				new TeleportRingEffect(e.getPlayer().getLocation().getBlock().getLocation().add(0.5, 0, 0.5), teleportTarget.getLocation().add(0.5, 1.0, 0.5), 1, 10, 40) {
 					@Override

@@ -6,7 +6,6 @@ import java.util.HashSet;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -22,6 +21,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.Inventory;
@@ -33,6 +33,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import ldcr.BridgingAnalyzer.Cmmands.BridgeCommand;
 import ldcr.BridgingAnalyzer.Cmmands.ClearCommand;
+import ldcr.BridgingAnalyzer.Cmmands.SaveWorldCommand;
 import ldcr.BridgingAnalyzer.Cmmands.StuckCommand;
 import ldcr.BridgingAnalyzer.Cmmands.VillagerSpawnPointCommand;
 import ldcr.BridgingAnalyzer.Utils.Util;
@@ -147,24 +148,40 @@ public class BridgingAnalyzer extends JavaPlugin implements Listener {
 		if (e.getDamager() == null) return;
 		if (e.getEntity().getType() == EntityType.PLAYER) {
 			if (e.getDamager().getType() == EntityType.PLAYER) {
-				if (onPvPDamage((Player) e.getEntity(), (Player) e.getDamager())) {
+				final int state = onPvPDamage((Player) e.getEntity(), (Player) e.getDamager());
+				if (state==-1) {
 					e.setCancelled(true);
+				} else if (state==1) {
+					e.setCancelled(true);
+					BridgingAnalyzer.getCounter((Player) e.getDamager()).setPvPEnabled(true);
+					TitleUtils.sendTitle((Player) e.getDamager(), "", "§c注意: §aPvP已开启", 10, 20, 10);
+					((Player)e.getEntity()).damage(0.00);
+					((Player)e.getEntity()).setNoDamageTicks(60);
+					((Player)e.getDamager()).setNoDamageTicks(60);
 				}
 			} else if (e.getDamager() instanceof Projectile) {
 				final Projectile proj = (Projectile) e.getDamager();
 				if (proj.getShooter() instanceof Player) {
-					if (onPvPDamage((Player) e.getEntity(), (Player) proj.getShooter())) {
+					final int state = onPvPDamage((Player) e.getEntity(), (Player) proj.getShooter());
+					if (state==-1) {
 						e.setCancelled(true);
+					} else if (state==1) {
+						e.setCancelled(true);
+						BridgingAnalyzer.getCounter((Player) proj.getShooter()).setPvPEnabled(true);
+						TitleUtils.sendTitle((Player) proj.getShooter(), "", "§c注意: §aPvP已开启", 10, 20, 10);
+						((Player)e.getEntity()).damage(0.00);
+						((Player)e.getEntity()).setNoDamageTicks(60);
+						((Player)proj.getShooter()).setNoDamageTicks(60);
 					}
 				}
 			}
 		}
 	}
 
-	private boolean onPvPDamage(final Player player, final Player damager) {
-		if (!BridgingAnalyzer.getCounter(player).isPvPEnabled()) return true;
-		if (!BridgingAnalyzer.getCounter(damager).isPvPEnabled()) return true;
-		return false;
+	private int onPvPDamage(final Player player, final Player damager) {
+		if (!BridgingAnalyzer.getCounter(player).isPvPEnabled()) return -1; // cancel
+		if (!BridgingAnalyzer.getCounter(damager).isPvPEnabled()) return 1; // enable
+		return 0; // accept
 	}
 
 	@EventHandler
@@ -183,6 +200,12 @@ public class BridgingAnalyzer extends JavaPlugin implements Listener {
 			}
 			e.setDamage(0.0);
 		}
+	}
+
+	@EventHandler
+	public void onJoin(final PlayerJoinEvent e) {
+		if (e.getPlayer().hasPermission("bridginganalyzer.noclear")) return;
+		teleportCheckPoint(e.getPlayer());
 	}
 
 	@Override
@@ -217,21 +240,16 @@ public class BridgingAnalyzer extends JavaPlugin implements Listener {
 		// TODO pluginManager.registerEvents(new ResourcePackLoader(), this);
 		getCommand("bridge").setExecutor(new BridgeCommand());
 		getCommand("clearblock").setExecutor(new ClearCommand());
+		getCommand("bsaveworld").setExecutor(new SaveWorldCommand());
 		getCommand("imstuck").setExecutor(new StuckCommand());
 		getCommand("genvillager").setExecutor(new VillagerSpawnPointCommand());
-		for (final World world : Bukkit.getWorlds()) {
-			world.setGameRuleValue("doDaylightCycle", "false");
-		}
 		spawnVillager();
 		Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
-
 			@Override
 			public void run() {
 				if (Bukkit.getOnlinePlayers().isEmpty()) return;
-				if (Bukkit.getWorld("world").getPlayers().isEmpty()) return;
 				spawnVillager();
 			}
-
 		}, 300, 300);
 		Bukkit.getConsoleSender().sendMessage("§b[BridgingAnalyzer] §d起床战争操作练习专用插件 已加载 §bBy.Ldcr");
 		Bukkit.getConsoleSender().sendMessage("§b[BridgingAnalyzer] §e踩在 §a绿宝石块 §e上可以设置传送点");

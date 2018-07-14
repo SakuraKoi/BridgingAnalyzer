@@ -16,7 +16,7 @@ public class ClearCommand implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
-		if (sender.isOp()) {
+		if (sender.hasPermission("bridginganalyzer.clear")) {
 			if (args.length == 0) {
 				sender.sendMessage("§b[BridgingAnalyzer] §c正在清除所有已放置方块....");
 				for (final Counter c : BridgingAnalyzer.counter.values()) {

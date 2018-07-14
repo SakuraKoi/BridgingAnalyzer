@@ -1,6 +1,6 @@
 name: BridgingAnalyzer
 main: ldcr.BridgingAnalyzer.BridgingAnalyzer
-version: 1.0.0
+version: 25
 author: Ldcr
 softdepend: ["BridgingSkin"]
 depend: ["LdcrUtils"]
@@ -17,6 +17,13 @@ commands:
   genvillager:
     description: create villager spawn point
     usage: /genvillager
+  bsaveworld:
+    description: save the world
+    usage: /bsaveworld
 permissions:
   bridginganalyzer.noclear:
+    default: op
+  bridginganalyzer.clear:
+    default: op
+  bridginganalyzer.admin:
     default: op

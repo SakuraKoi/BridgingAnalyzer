@@ -5,6 +5,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -31,7 +32,7 @@ public class CounterListener implements Listener {
 	public void onClick(final PlayerInteractEvent e) {
 
 		if (e.getAction().toString().contains("CLICK")) {
-			if (e.getAction().toString().startsWith("LEFT_CLICK_"))
+			if (e.getAction()== Action.LEFT_CLICK_BLOCK)
 				if (e.isCancelled()) return;
 			final Counter c = BridgingAnalyzer.getCounter(e.getPlayer());
 			c.countCPS();
