@@ -45,8 +45,8 @@ public class BridgeCommand implements CommandExecutor {
 			break;
 		}
 		case "stand": {
-			counter.setStandBridgeHighlightEnabled(!counter.isStandBridgeHighlightEnabled());
-			sender.sendMessage("§6§l[BridgingAnalyzer] §a走搭位置指示已" + (counter.isStandBridgeHighlightEnabled() ? "开启" : "关闭"));
+			counter.setStandBridgeMarkerEnabled(!counter.isStandBridgeMarkerEnabled());
+			sender.sendMessage("§6§l[BridgingAnalyzer] §a走搭位置指示已" + (counter.isStandBridgeMarkerEnabled() ? "开启" : "关闭"));
 			break;
 		}
 		}

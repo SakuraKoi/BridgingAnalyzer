@@ -17,7 +17,7 @@ public class SaveWorldCommand implements CommandExecutor {
 	public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
 		if (sender.hasPermission("bridginganalyzer.admin")) {
 			sender.sendMessage("§b[BridgingAnalyzer] §c正在保存世界....");
-			for (final Counter c : BridgingAnalyzer.counter.values()) {
+			for (final Counter c : BridgingAnalyzer.getCounters().values()) {
 				c.instantBreakBlock();
 			}
 			for (final Block b : Counter.scheduledBreakBlocks) {

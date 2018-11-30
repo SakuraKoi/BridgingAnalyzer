@@ -1,14 +1,15 @@
-package ldcr.BridgingAnalyzer.hook.skin;
+package ldcr.BridgingAnalyzer;
 
 import org.bukkit.SandstoneType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Sandstone;
 
-public class NoSkinHook implements ISkinHook {
+import ldcr.BridgingAnalyzer.api.BlockSkinProvider;
 
+public class DefaultBlockSkinProvider implements BlockSkinProvider {
 	@Override
-	public ItemStack getItem(final Player p) {
+	public ItemStack provide(final Player player) {
 		return new Sandstone(SandstoneType.SMOOTH).toItemStack(64);
 	}
 }

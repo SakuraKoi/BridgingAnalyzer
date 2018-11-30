@@ -6,9 +6,7 @@ import org.bukkit.block.Block;
 
 public class Util {
 	public static void breakBlock(final Block b) {
-		if (!b.getChunk().isLoaded()) {
-			b.getChunk().load(false);
-		}
+		if (!b.getChunk().isLoaded()) b.getChunk().load(false);
 		b.getWorld().playEffect(b.getLocation(), Effect.STEP_SOUND, b.getType());
 		b.setType(Material.AIR);
 	}

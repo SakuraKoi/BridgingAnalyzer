@@ -20,11 +20,9 @@ import ldcr.Utils.Bukkit.TitleUtils;
 public class CounterListener implements Listener {
 	@EventHandler
 	public void onBreakBlock(final BlockBreakEvent e) {
-		if (e.getPlayer() != null) {
-			if (!Counter.isPlacedByPlayer(e.getBlock())) {
-				if (e.getPlayer().getGameMode() == GameMode.CREATIVE) return;
-				e.setCancelled(true);
-			}
+		if (e.getPlayer() != null) if (!BridgingAnalyzer.isPlacedByPlayer(e.getBlock())) {
+			if (e.getPlayer().getGameMode() == GameMode.CREATIVE) return;
+			e.setCancelled(true);
 		}
 	}
 
@@ -32,13 +30,12 @@ public class CounterListener implements Listener {
 	public void onClick(final PlayerInteractEvent e) {
 
 		if (e.getAction().toString().contains("CLICK")) {
-			if (e.getAction()== Action.LEFT_CLICK_BLOCK)
-				if (e.isCancelled()) return;
+			if (e.getAction() == Action.LEFT_CLICK_BLOCK) if (e.isCancelled()) return;
 			final Counter c = BridgingAnalyzer.getCounter(e.getPlayer());
 			c.countCPS();
 			if (!c.isSpeedCountEnabled()) return;
 			ActionBarUtils.sendActionBar(	e.getPlayer(),
-			                             	"§c§l最大CPS - " + c.getMaxCPS() + " §d§l当前CPS - " + c.getCPS() + " §a§l| §c§l最远距离 - " + c.getMaxBridgeLength() + " §d§l当前距离 - " + c.getBridgeLength());
+											"§c§l最大CPS - " + c.getMaxCPS() + " §d§l当前CPS - " + c.getCPS() + " §a§l| §c§l最远距离 - " + c.getMaxBridgeLength() + " §d§l当前距离 - " + c.getBridgeLength());
 		}
 	}
 
@@ -46,9 +43,8 @@ public class CounterListener implements Listener {
 	public void onFallDown(final PlayerMoveEvent e) {
 		if (e.getTo().getY() < 0) {
 			final Counter c = BridgingAnalyzer.getCounter(e.getPlayer());
-			if (c.isSpeedCountEnabled()) {
+			if (c.isSpeedCountEnabled())
 				TitleUtils.sendTitle(e.getPlayer(), "", "§cMax - " + c.getMaxBridgeSpeed() + " block/s", 1, 40, 1);
-			}
 			c.reset();
 			BridgingAnalyzer.teleportCheckPoint(e.getPlayer());
 		}
@@ -66,10 +62,9 @@ public class CounterListener implements Listener {
 			if (e.getPlayer().getGameMode() == GameMode.CREATIVE) return;
 			final Counter c = BridgingAnalyzer.getCounter(e.getPlayer());
 			c.countBridge(e.getBlock());
-			if (c.isSpeedCountEnabled()) {
+			if (c.isSpeedCountEnabled())
 				TitleUtils.sendTitle(e.getPlayer(), "", "§b" + c.getBridgeSpeed() + " block/s", 1, 40, 1);
-			}
-			Bukkit.getScheduler().runTaskLater(BridgingAnalyzer.instance, new Runnable() {
+			Bukkit.getScheduler().runTaskLater(BridgingAnalyzer.getInstance(), new Runnable() {
 
 				@SuppressWarnings("deprecation")
 				@Override
@@ -87,7 +82,7 @@ public class CounterListener implements Listener {
 			if (e.getPlayer().getGameMode() == GameMode.CREATIVE) return;
 			final Counter c = BridgingAnalyzer.getCounter(e.getPlayer());
 			c.addLogBlock(e.getBlockClicked().getRelative(e.getBlockFace()));
-			Bukkit.getScheduler().runTaskLater(BridgingAnalyzer.instance, new Runnable() {
+			Bukkit.getScheduler().runTaskLater(BridgingAnalyzer.getInstance(), new Runnable() {
 				@Override
 				public void run() {
 					e.getPlayer().getInventory().remove(Material.BUCKET);

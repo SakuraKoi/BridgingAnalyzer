@@ -11,13 +11,13 @@ public abstract class ParticleRing {
 		final int circleElements = 20;
 		final double radius = 1.0;
 		for (int i = 0; i < circleElements; ++i) {
-			final double alpha = (360.0 / circleElements) * i;
+			final double alpha = 360.0 / circleElements * i;
 			final double x = radius * Math.sin(Math.toRadians(alpha));
 			final double z = radius * Math.cos(Math.toRadians(alpha));
 			final Location particle = new Location(centerLoc.getWorld(), centerLoc.getX() + x, centerLoc.getY(), centerLoc.getZ() + z);
 			type.display(0, 0, 0, 0, 1, particle, 64);
 		}
-		Bukkit.getScheduler().runTaskLater(BridgingAnalyzer.instance, new Runnable() {
+		Bukkit.getScheduler().runTaskLater(BridgingAnalyzer.getInstance(), new Runnable() {
 
 			@Override
 			public void run() {

@@ -33,10 +33,8 @@ public class HighlightListener implements Listener {
 	public void onFallDown(final PlayerMoveEvent e) {
 		if (e.getTo().getY() < 0) {
 			final Block historyBlock = highlightHistory.get(e.getPlayer());
-			if (historyBlock != null) {
-				e.getPlayer().sendBlockChange(	historyBlock.getLocation(), historyBlock.getType(),
-												historyBlock.getData());
-			}
+			if (historyBlock != null) e.getPlayer().sendBlockChange(historyBlock.getLocation(), historyBlock.getType(),
+																	historyBlock.getData());
 		}
 	}
 
@@ -48,10 +46,8 @@ public class HighlightListener implements Listener {
 			final Block target = getRelativeBrick(roundLocation(e.getTo().clone().add(0, -1, 0)).getBlock());
 			if (target != null) {
 				final Block historyBlock = highlightHistory.get(e.getPlayer());
-				if (historyBlock != null) {
-					e.getPlayer().sendBlockChange(	historyBlock.getLocation(), historyBlock.getType(),
-													historyBlock.getData());
-				}
+				if (historyBlock != null) e.getPlayer().sendBlockChange(historyBlock.getLocation(),
+																		historyBlock.getType(), historyBlock.getData());
 				e.getPlayer().sendBlockChange(target.getLocation(), Material.SNOW_BLOCK, (byte) 0);
 				highlightHistory.put(e.getPlayer(), target);
 			}
@@ -60,7 +56,7 @@ public class HighlightListener implements Listener {
 
 	@EventHandler
 	public void onStandBridgeMove(final PlayerMoveEvent e) {
-		if (!BridgingAnalyzer.getCounter(e.getPlayer()).isStandBridgeHighlightEnabled()) return;
+		if (!BridgingAnalyzer.getCounter(e.getPlayer()).isStandBridgeMarkerEnabled()) return;
 		ParticleEffects.TOWN_AURA.display(5, e.getTo().clone().add(0.08, 0.0, 0.08), 2);
 	}
 

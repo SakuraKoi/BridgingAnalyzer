@@ -1,8 +1,7 @@
 name: BridgingAnalyzer
 main: ldcr.BridgingAnalyzer.BridgingAnalyzer
-version: 25
+version: 27
 author: Ldcr
-softdepend: ["BridgingSkin"]
 depend: ["LdcrUtils"]
 commands:
   bridge:

@@ -7,9 +7,7 @@ public class SoundMachine {
 		Sound sound = null;
 		try {
 			sound = Sound.valueOf(v18);
-			if (sound.equals(null)) {
-				sound = Sound.valueOf(v19);
-			}
+			if (sound.equals(null)) sound = Sound.valueOf(v19);
 		} catch (final Exception ex) {}
 		return sound;
 	}
