@@ -3,6 +3,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Spigot1.8.8"/>
-	<classpathentry kind="lib" path="F:/home/Minecraft/插件输出/LdcrUtils v33.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
