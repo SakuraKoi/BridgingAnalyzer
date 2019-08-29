@@ -1,4 +1,4 @@
-package ldcr.BridgingAnalyzer;
+package sakura.kooi.BridgingAnalyzer;
 
 import java.util.HashMap;
 
@@ -11,10 +11,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import ldcr.Utils.Bukkit.ParticleEffects;
+import sakura.kooi.BridgingAnalyzer.Utils.ParticleEffects;
 
 public class HighlightListener implements Listener {
-	private final HashMap<Player, Block> highlightHistory = new HashMap<Player, Block>();
+	private final HashMap<Player, Block> highlightHistory = new HashMap<>();
 
 	private Block getRelativeBrick(final Block b) {
 		Block relative = b.getRelative(BlockFace.EAST);
@@ -33,8 +33,10 @@ public class HighlightListener implements Listener {
 	public void onFallDown(final PlayerMoveEvent e) {
 		if (e.getTo().getY() < 0) {
 			final Block historyBlock = highlightHistory.get(e.getPlayer());
-			if (historyBlock != null) e.getPlayer().sendBlockChange(historyBlock.getLocation(), historyBlock.getType(),
-																	historyBlock.getData());
+			if (historyBlock != null) {
+				e.getPlayer().sendBlockChange(historyBlock.getLocation(), historyBlock.getType(),
+						historyBlock.getData());
+			}
 		}
 	}
 
@@ -46,8 +48,10 @@ public class HighlightListener implements Listener {
 			final Block target = getRelativeBrick(roundLocation(e.getTo().clone().add(0, -1, 0)).getBlock());
 			if (target != null) {
 				final Block historyBlock = highlightHistory.get(e.getPlayer());
-				if (historyBlock != null) e.getPlayer().sendBlockChange(historyBlock.getLocation(),
-																		historyBlock.getType(), historyBlock.getData());
+				if (historyBlock != null) {
+					e.getPlayer().sendBlockChange(historyBlock.getLocation(),
+							historyBlock.getType(), historyBlock.getData());
+				}
 				e.getPlayer().sendBlockChange(target.getLocation(), Material.SNOW_BLOCK, (byte) 0);
 				highlightHistory.put(e.getPlayer(), target);
 			}

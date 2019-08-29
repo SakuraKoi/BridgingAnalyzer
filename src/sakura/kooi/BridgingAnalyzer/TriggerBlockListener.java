@@ -1,4 +1,4 @@
-package ldcr.BridgingAnalyzer;
+package sakura.kooi.BridgingAnalyzer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -17,14 +17,13 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-import ldcr.BridgingAnalyzer.Utils.ParticleRing;
-import ldcr.BridgingAnalyzer.Utils.SoundMachine;
-import ldcr.BridgingAnalyzer.Utils.TeleportRingEffect;
-import ldcr.BridgingAnalyzer.Utils.Util;
-import ldcr.Utils.Bukkit.FireworkUtils;
-import ldcr.Utils.Bukkit.ParticleEffects;
-import ldcr.Utils.Bukkit.ParticleLine;
-import ldcr.Utils.Bukkit.TitleUtils;
+import sakura.kooi.BridgingAnalyzer.Utils.FireworkUtils;
+import sakura.kooi.BridgingAnalyzer.Utils.ParticleEffects;
+import sakura.kooi.BridgingAnalyzer.Utils.ParticleRing;
+import sakura.kooi.BridgingAnalyzer.Utils.SoundMachine;
+import sakura.kooi.BridgingAnalyzer.Utils.TeleportRingEffect;
+import sakura.kooi.BridgingAnalyzer.Utils.TitleUtils;
+import sakura.kooi.BridgingAnalyzer.Utils.Util;
 
 public class TriggerBlockListener implements Listener {
 	@EventHandler
@@ -32,15 +31,12 @@ public class TriggerBlockListener implements Listener {
 		if (e.getPlayer() != null) {
 			if (e.getPlayer().getGameMode() == GameMode.CREATIVE) return;
 			if (isTriggerBlock(e.getBlock().getRelative(BlockFace.DOWN)) || isTriggerBlock(e.getBlock().getRelative(BlockFace.DOWN,
-																													2)))
-				Bukkit.getScheduler().runTaskLater(BridgingAnalyzer.getInstance(), new Runnable() {
-
-					@Override
-					public void run() {
-						Util.breakBlock(e.getBlock());
-						BridgingAnalyzer.getCounter(e.getPlayer()).removeBlockRecord(e.getBlock());
-					}
+					2))) {
+				Bukkit.getScheduler().runTaskLater(BridgingAnalyzer.getInstance(), () -> {
+					Util.breakBlock(e.getBlock());
+					BridgingAnalyzer.getCounter(e.getPlayer()).removeBlockRecord(e.getBlock());
 				}, 100);
+			}
 		}
 	}
 
@@ -80,7 +76,7 @@ public class TriggerBlockListener implements Listener {
 			};
 			TitleUtils.sendTitle(e.getPlayer(), "", "§a传送点已设置", 5, 10, 5);
 			e.getPlayer().getWorld().playSound(	e.getTo(),
-												SoundMachine.get("ORB_PICKUP", "ENTITY_EXPERIENCE_ORB_PICKUP"), 1, 1);
+					SoundMachine.get("ORB_PICKUP", "ENTITY_EXPERIENCE_ORB_PICKUP"), 1, 1);
 		}
 	}
 
@@ -117,19 +113,12 @@ public class TriggerBlockListener implements Listener {
 			final Vector finalVector = getAttackVector(player.getLocation());
 			final Location finalAttackFrom = player.getLocation().add(finalVector);
 			finalAttackFrom.setY(player.getLocation().getY() + 1.2);
-
-			ParticleLine.drawParticleLine(	player.getLocation().add(0.0, 1.2, 0.0), finalAttackFrom,
-											ldcr.Utils.Bukkit.ParticleEffects.REDSTONE, 4);
 			final Vector normalize = finalAttackFrom.toVector().subtract(player.getLocation().toVector()).normalize();
-			Bukkit.getScheduler().runTaskLater(BridgingAnalyzer.getInstance(), new Runnable() {
-				@Override
-				public void run() {
-					player.setNoDamageTicks(0);
-					player.damage(0.0);
-					// final double n = (1 + (2 * 0.15)) - 0.05;
-					player.setVelocity(normalize.multiply(-1.25).setY(0.45));
-				}
-
+			Bukkit.getScheduler().runTaskLater(BridgingAnalyzer.getInstance(), () -> {
+				player.setNoDamageTicks(0);
+				player.damage(0.0);
+				// final double n = (1 + (2 * 0.15)) - 0.05;
+				player.setVelocity(normalize.multiply(-1.25).setY(0.45));
 			}, 7);
 		}
 	}
@@ -145,7 +134,7 @@ public class TriggerBlockListener implements Listener {
 			c.setCheckPoint(Bukkit.getWorld("world").getSpawnLocation().add(0.5, 1, 0.5));
 			c.resetMax();
 			new ParticleRing(e.getTo().getBlock().getLocation().add(0.5, 1.5,
-																	0.5), ParticleEffects.FIREWORKS_SPARK, 35) {
+					0.5), ParticleEffects.FIREWORKS_SPARK, 35) {
 
 				@Override
 				public void onFinish() {
@@ -162,7 +151,7 @@ public class TriggerBlockListener implements Listener {
 			};
 			TitleUtils.sendTitle(e.getPlayer(), "", "§b正在返回出生点...", 5, 25, 5);
 			e.getPlayer().getWorld().playSound(	e.getTo(),
-												SoundMachine.get("ORB_PICKUP", "ENTITY_EXPERIENCE_ORB_PICKUP"), 1, 1);
+					SoundMachine.get("ORB_PICKUP", "ENTITY_EXPERIENCE_ORB_PICKUP"), 1, 1);
 		}
 	}
 
@@ -185,15 +174,16 @@ public class TriggerBlockListener implements Listener {
 		if (e.getTo().getBlock().getRelative(BlockFace.DOWN).getType() == Material.BEACON) {
 			e.getPlayer().setNoDamageTicks(20);
 			Block to = e.getTo().getBlock();
-			while ((to.getType() == Material.AIR || to.getType() == Material.STAINED_GLASS_PANE || to.getType() == Material.WALL_SIGN || to.getType() == Material.SIGN_POST) && to.getY() < 255)
+			while ((to.getType() == Material.AIR || to.getType() == Material.STAINED_GLASS_PANE || to.getType() == Material.WALL_SIGN || to.getType() == Material.SIGN_POST) && to.getY() < 255) {
 				to = to.getRelative(BlockFace.UP);
+			}
 			if (to.getType() == Material.BEACON) {
 				e.getPlayer().setNoDamageTicks(50);
 				final Block teleportTarget = to;
 				new TeleportRingEffect(e.getTo().getBlock().getLocation().add(	0.5, 0,
-																				0.5), teleportTarget.getLocation().add(	0.5,
-																														1.0,
-																														0.5), 1, 0, 40) {
+						0.5), teleportTarget.getLocation().add(	0.5,
+								1.0,
+								0.5), 1, 0, 40) {
 
 					@Override
 					public void onFinish() {
@@ -205,8 +195,8 @@ public class TriggerBlockListener implements Listener {
 
 				};
 				e.getPlayer().getWorld().playSound(	e.getTo(),
-													SoundMachine.get("ENDERMAN_TELEPORT", "ENTITY_ENDERMEN_TELEPORT"),
-													1, 1);
+						SoundMachine.get("ENDERMAN_TELEPORT", "ENTITY_ENDERMEN_TELEPORT"),
+						1, 1);
 			}
 
 		}
@@ -220,15 +210,16 @@ public class TriggerBlockListener implements Listener {
 		if (e.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN).getType() == Material.BEACON) {
 			e.getPlayer().setNoDamageTicks(20);
 			Block to = e.getPlayer().getLocation().getBlock().getRelative(BlockFace.DOWN, 2);
-			while ((to.getType() == Material.AIR || to.getType() == Material.STAINED_GLASS_PANE || to.getType() == Material.WALL_SIGN || to.getType() == Material.SIGN_POST) && to.getY() > 0)
+			while ((to.getType() == Material.AIR || to.getType() == Material.STAINED_GLASS_PANE || to.getType() == Material.WALL_SIGN || to.getType() == Material.SIGN_POST) && to.getY() > 0) {
 				to = to.getRelative(BlockFace.DOWN);
+			}
 			if (to.getType() == Material.BEACON) {
 				e.getPlayer().setNoDamageTicks(50);
 				final Block teleportTarget = to;
 				new TeleportRingEffect(e.getPlayer().getLocation().getBlock().getLocation().add(0.5, 0,
-																								0.5), teleportTarget.getLocation().add(	0.5,
-																																		1.0,
-																																		0.5), 1, 10, 40) {
+						0.5), teleportTarget.getLocation().add(	0.5,
+								1.0,
+								0.5), 1, 10, 40) {
 					@Override
 					public void onFinish() {
 						final Location loc = teleportTarget.getLocation().add(0.5, 1.5, 0.5);
@@ -239,8 +230,8 @@ public class TriggerBlockListener implements Listener {
 
 				};
 				e.getPlayer().getWorld().playSound(	e.getPlayer().getLocation(),
-													SoundMachine.get("ENDERMAN_TELEPORT", "ENTITY_ENDERMEN_TELEPORT"),
-													1, 1);
+						SoundMachine.get("ENDERMAN_TELEPORT", "ENTITY_ENDERMEN_TELEPORT"),
+						1, 1);
 			}
 
 		}

@@ -1,4 +1,4 @@
-package ldcr.BridgingAnalyzer.Utils;
+package sakura.kooi.BridgingAnalyzer.Utils;
 
 import org.bukkit.command.CommandSender;
 

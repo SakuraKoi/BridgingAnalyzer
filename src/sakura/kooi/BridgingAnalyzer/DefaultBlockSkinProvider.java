@@ -1,11 +1,11 @@
-package ldcr.BridgingAnalyzer;
+package sakura.kooi.BridgingAnalyzer;
 
 import org.bukkit.SandstoneType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Sandstone;
 
-import ldcr.BridgingAnalyzer.api.BlockSkinProvider;
+import sakura.kooi.BridgingAnalyzer.api.BlockSkinProvider;
 
 public class DefaultBlockSkinProvider implements BlockSkinProvider {
 	@Override

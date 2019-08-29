@@ -1,4 +1,4 @@
-package ldcr.BridgingAnalyzer.Cmmands;
+package sakura.kooi.BridgingAnalyzer.Cmmands;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -28,7 +28,7 @@ public class VillagerSpawnPointCommand implements CommandExecutor {
 		stand.setMarker(true);
 		stand.setCustomName("VillagerSpawnPoint");
 
-		player.sendMessage("§b[BridgingAnalyzer] §a村民刷新点已设置");
+		player.sendMessage("§b§l搭路练习 §7>> §a村民刷新点已设置");
 		return true;
 	}
 

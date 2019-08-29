@@ -1,4 +1,4 @@
-package ldcr.BridgingAnalyzer;
+package sakura.kooi.BridgingAnalyzer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
