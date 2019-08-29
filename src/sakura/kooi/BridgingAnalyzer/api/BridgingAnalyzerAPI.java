@@ -1,9 +1,9 @@
-package ldcr.BridgingAnalyzer.api;
+package sakura.kooi.BridgingAnalyzer.api;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import ldcr.BridgingAnalyzer.BridgingAnalyzer;
+import sakura.kooi.BridgingAnalyzer.BridgingAnalyzer;
 
 public class BridgingAnalyzerAPI {
 	public static void setBlockSkinProvider(final BlockSkinProvider blockSkinProvider) {
@@ -23,6 +23,9 @@ public class BridgingAnalyzerAPI {
 	}
 	public static void teleportCheckPoint(final Player player) {
 		BridgingAnalyzer.teleportCheckPoint(player);
+	}
+	public static void refreshItem(final Player p) {
+		BridgingAnalyzer.refreshItem(p);
 	}
 	public static void setPlayerHighlightEnabled(final Player player, final boolean enabled) {
 		BridgingAnalyzer.getCounter(player).setHighlightEnabled(enabled);

@@ -1,8 +1,7 @@
 name: BridgingAnalyzer
-main: ldcr.BridgingAnalyzer.BridgingAnalyzer
+main: sakura.kooi.BridgingAnalyzer.BridgingAnalyzer
 version: 27
-author: Ldcr
-depend: ["LdcrUtils"]
+author: SakuraKooi
 commands:
   bridge:
     description: Bridging Analyzer Config
