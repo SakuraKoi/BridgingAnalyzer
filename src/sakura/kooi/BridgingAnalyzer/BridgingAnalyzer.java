@@ -41,7 +41,6 @@ import sakura.kooi.BridgingAnalyzer.Cmmands.StuckCommand;
 import sakura.kooi.BridgingAnalyzer.Cmmands.VillagerSpawnPointCommand;
 import sakura.kooi.BridgingAnalyzer.Utils.Metrics;
 import sakura.kooi.BridgingAnalyzer.Utils.NoAIUtils;
-import sakura.kooi.BridgingAnalyzer.Utils.ReflectionUtils;
 import sakura.kooi.BridgingAnalyzer.Utils.TitleUtils;
 import sakura.kooi.BridgingAnalyzer.Utils.Util;
 import sakura.kooi.BridgingAnalyzer.api.BlockSkinProvider;
@@ -192,7 +191,6 @@ public class BridgingAnalyzer extends JavaPlugin implements Listener {
 		final Metrics metrics = new Metrics(this);
 		metrics.addCustomChart(new Metrics.SimplePie("distributeversion", () -> "Public-Bilibili-Final"));
 		blockSkinProvider = new DefaultBlockSkinProvider();
-		ReflectionUtils.DataType.doCheck();
 		final PluginManager pluginManager = Bukkit.getPluginManager();
 		pluginManager.registerEvents(this, this);
 		pluginManager.registerEvents(new CounterListener(), this);
