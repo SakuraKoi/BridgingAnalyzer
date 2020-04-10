@@ -1,4 +1,7 @@
 # BridgingAnalyzer 搭路练习
+
+![](https://img.shields.io/github/license/SakuraKoi/BridgingAnalyzer?style=flat-square) ![](https://img.shields.io/bstats/players/3991?style=flat-square) ![](https://img.shields.io/bstats/servers/3991?style=flat-square)
+
 Minecraft Bridging Practice for Bedwars
 
 > 本插件以GPLv2协议发布
