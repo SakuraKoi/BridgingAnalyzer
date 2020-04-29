@@ -197,8 +197,7 @@ public class Counter {
 
     public void instantBreakBlock() {
         for (final Block b : allBlock) {
-            b.setType(Material.AIR);
-            b.getWorld().playEffect(b.getLocation(), Effect.STEP_SOUND, b.getType());
+            Util.breakBlock(b);
             BridgingAnalyzer.getPlacedBlocks().remove(b);
         }
         allBlock.clear();
