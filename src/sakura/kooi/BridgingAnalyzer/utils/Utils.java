@@ -1,4 +1,4 @@
-package sakura.kooi.BridgingAnalyzer.Utils;
+package sakura.kooi.BridgingAnalyzer.utils;
 
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -6,7 +6,7 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-public class Util {
+public class Utils {
     public static void breakBlock(Block b) {
         if (!b.getChunk().isLoaded()) {
             b.getChunk().load(false);

@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import sakura.kooi.BridgingAnalyzer.Utils.ParticleEffects;
+import sakura.kooi.BridgingAnalyzer.utils.ParticleEffects;
 
 import java.util.HashMap;
 

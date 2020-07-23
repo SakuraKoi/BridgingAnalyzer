@@ -1,4 +1,4 @@
-package sakura.kooi.BridgingAnalyzer.Cmmands;
+package sakura.kooi.BridgingAnalyzer.commands;
 
 import org.bukkit.Location;
 import org.bukkit.Material;

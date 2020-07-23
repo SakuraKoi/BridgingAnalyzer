@@ -1,6 +1,6 @@
 name: BridgingAnalyzer
 main: sakura.kooi.BridgingAnalyzer.BridgingAnalyzer
-version: 27
+version: 28
 author: SakuraKooi
 commands:
   bridge:

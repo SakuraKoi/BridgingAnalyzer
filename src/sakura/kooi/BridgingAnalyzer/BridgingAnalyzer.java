@@ -22,11 +22,11 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import sakura.kooi.BridgingAnalyzer.Cmmands.*;
-import sakura.kooi.BridgingAnalyzer.Utils.Metrics;
-import sakura.kooi.BridgingAnalyzer.Utils.NoAIUtils;
-import sakura.kooi.BridgingAnalyzer.Utils.TitleUtils;
-import sakura.kooi.BridgingAnalyzer.Utils.Util;
+import sakura.kooi.BridgingAnalyzer.commands.*;
+import sakura.kooi.BridgingAnalyzer.utils.Metrics;
+import sakura.kooi.BridgingAnalyzer.utils.NoAIUtils;
+import sakura.kooi.BridgingAnalyzer.utils.TitleUtils;
+import sakura.kooi.BridgingAnalyzer.utils.Utils;
 import sakura.kooi.BridgingAnalyzer.api.BlockSkinProvider;
 
 import java.util.HashMap;
@@ -156,11 +156,11 @@ public class BridgingAnalyzer extends JavaPlugin implements Listener {
                 c.reset();
                 teleportCheckPoint((Player) e.getEntity());
                 TitleUtils.sendTitle((Player) e.getEntity(), "",
-                        "§4致命伤害 - " + Util.formatDouble(e.getFinalDamage() / 2) + " ❤", 10, 20, 10);
+                        "§4致命伤害 - " + Utils.formatDouble(e.getFinalDamage() / 2) + " ❤", 10, 20, 10);
                 e.setDamage(0.0);
             } else if (e.getFinalDamage() > 10) {
                 TitleUtils.sendTitle((Player) e.getEntity(), "",
-                        "§c严重伤害 - " + Util.formatDouble(e.getFinalDamage() / 2) + " ❤", 10, 20, 10);
+                        "§c严重伤害 - " + Utils.formatDouble(e.getFinalDamage() / 2) + " ❤", 10, 20, 10);
             }
             e.setDamage(0.0);
         }

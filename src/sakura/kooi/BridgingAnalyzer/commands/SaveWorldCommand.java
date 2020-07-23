@@ -1,4 +1,4 @@
-package sakura.kooi.BridgingAnalyzer.Cmmands;
+package sakura.kooi.BridgingAnalyzer.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -8,7 +8,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import sakura.kooi.BridgingAnalyzer.BridgingAnalyzer;
 import sakura.kooi.BridgingAnalyzer.Counter;
-import sakura.kooi.BridgingAnalyzer.Utils.Util;
+import sakura.kooi.BridgingAnalyzer.utils.Utils;
 
 public class SaveWorldCommand implements CommandExecutor {
 
@@ -20,7 +20,7 @@ public class SaveWorldCommand implements CommandExecutor {
                 c.instantBreakBlock();
             }
             for (Block b : Counter.scheduledBreakBlocks) {
-                Util.breakBlock(b);
+                Utils.breakBlock(b);
             }
             for (World world : Bukkit.getWorlds()) {
                 world.save();

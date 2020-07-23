@@ -1,4 +1,4 @@
-package sakura.kooi.BridgingAnalyzer.Cmmands;
+package sakura.kooi.BridgingAnalyzer.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import sakura.kooi.BridgingAnalyzer.BridgingAnalyzer;
 import sakura.kooi.BridgingAnalyzer.Counter;
-import sakura.kooi.BridgingAnalyzer.Utils.SendMessageUtils;
+import sakura.kooi.BridgingAnalyzer.utils.SendMessageUtils;
 
 public class BridgeCommand implements CommandExecutor {
 
@@ -18,12 +18,13 @@ public class BridgeCommand implements CommandExecutor {
         }
         if (args.length != 1) {
             SendMessageUtils.sendMessage(sender,
-                    "§b§l搭路练习 §7>> §b骚操作练习 最终版 §lBy.SakuraKooi",
+                    "§b§l搭路练习 §7>> §b§lBridgingAnalyzer | By.SakuraKooi",
                     "§b§l搭路练习 §7>> §e/bridge highlight    §a启用/禁用侧搭辅助指示",
                     "§b§l搭路练习 §7>> §e/bridge pvp         §a启用/禁用伤害屏蔽",
                     "§b§l搭路练习 §7>> §e/bridge speed       §a启用/禁用搭路速度统计",
                     "§b§l搭路练习 §7>> §e/bridge stand       §a启用/禁用走搭位置指示",
-                    "§b§l搭路练习 §7>> §d所配置的参数仅对您有效, 其他玩家不受影响."
+                    "§b§l搭路练习 §7>> §d所配置的参数仅对您有效, 其他玩家不受影响",
+                    "§b§l搭路练习 §7>> §bhttps://github.com/SakuraKoi/BridgingAnalyzer"
             );
             return true;
         }

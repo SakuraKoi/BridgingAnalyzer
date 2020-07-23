@@ -12,7 +12,7 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
-import sakura.kooi.BridgingAnalyzer.Utils.*;
+import sakura.kooi.BridgingAnalyzer.utils.*;
 
 public class TriggerBlockListener implements Listener {
     @EventHandler
@@ -22,7 +22,7 @@ public class TriggerBlockListener implements Listener {
             if (isTriggerBlock(e.getBlock().getRelative(BlockFace.DOWN)) || isTriggerBlock(e.getBlock().getRelative(BlockFace.DOWN,
                     2))) {
                 Bukkit.getScheduler().runTaskLater(BridgingAnalyzer.getInstance(), () -> {
-                    Util.breakBlock(e.getBlock());
+                    Utils.breakBlock(e.getBlock());
                     BridgingAnalyzer.getCounter(e.getPlayer()).removeBlockRecord(e.getBlock());
                 }, 100);
             }

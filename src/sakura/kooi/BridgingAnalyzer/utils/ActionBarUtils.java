@@ -1,4 +1,4 @@
-package sakura.kooi.BridgingAnalyzer.Utils;
+package sakura.kooi.BridgingAnalyzer.utils;
 
 import org.bukkit.entity.Player;
 

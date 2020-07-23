@@ -13,8 +13,8 @@ import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
-import sakura.kooi.BridgingAnalyzer.Utils.ActionBarUtils;
-import sakura.kooi.BridgingAnalyzer.Utils.TitleUtils;
+import sakura.kooi.BridgingAnalyzer.utils.ActionBarUtils;
+import sakura.kooi.BridgingAnalyzer.utils.TitleUtils;
 
 public class CounterListener implements Listener {
     @EventHandler

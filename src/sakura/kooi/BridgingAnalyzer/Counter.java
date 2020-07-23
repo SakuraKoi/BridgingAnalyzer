@@ -11,8 +11,8 @@ import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
-import sakura.kooi.BridgingAnalyzer.Utils.SoundMachine;
-import sakura.kooi.BridgingAnalyzer.Utils.Util;
+import sakura.kooi.BridgingAnalyzer.utils.SoundMachine;
+import sakura.kooi.BridgingAnalyzer.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -96,13 +96,13 @@ public class Counter {
             if (peri > 1000L) {
                 result = counterBridge.size() / (peri / 1000.0);
                 if (result > maxBridge) {
-                    maxBridge = Util.formatDouble(result);
+                    maxBridge = Utils.formatDouble(result);
                 }
             } else {
                 result = counterBridge.size();
             }
         }
-        return Util.formatDouble(result);
+        return Utils.formatDouble(result);
     }
 
     public int getCPS() {
@@ -123,7 +123,7 @@ public class Counter {
 
     public void instantBreakBlock() {
         for (Block b : allBlock) {
-            Util.breakBlock(b);
+            Utils.breakBlock(b);
             BridgingAnalyzer.getPlacedBlocks().remove(b);
         }
         allBlock.clear();
@@ -172,7 +172,7 @@ public class Counter {
             Chest chest = (Chest) target.getState();
             for (ItemStack stack : chest.getBlockInventory().getContents())
                 if (stack != null) {
-                    Util.addItem(player.getInventory(), stack.clone());
+                    Utils.addItem(player.getInventory(), stack.clone());
                 }
             player.getWorld().playSound(player.getLocation(), SoundMachine.get("ITEM_PICKUP", "ENTITY_ITEM_PICKUP"), 1,
                     1);
@@ -188,7 +188,7 @@ public class Counter {
             Chest chest = (Chest) target.getState();
             for (ItemStack stack : chest.getBlockInventory().getContents())
                 if (stack != null) {
-                    Util.addItem(player.getInventory(), stack.clone());
+                    Utils.addItem(player.getInventory(), stack.clone());
                 }
             player.getWorld().playSound(player.getLocation(), SoundMachine.get("ITEM_PICKUP", "ENTITY_ITEM_PICKUP"), 1,
                     1);
@@ -234,7 +234,7 @@ public class Counter {
                     BridgingAnalyzer.getPlacedBlocks().remove(b);
                 }
                 if (b != null) {
-                    Util.breakBlock(b);
+                    Utils.breakBlock(b);
                     BridgingAnalyzer.getPlacedBlocks().remove(b);
                 }
             } else {
