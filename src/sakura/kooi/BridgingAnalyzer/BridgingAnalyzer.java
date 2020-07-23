@@ -43,7 +43,7 @@ public class BridgingAnalyzer extends JavaPlugin implements Listener {
 
     public static void clearEffect(Player player) {
         for (PotionEffect eff : player.getActivePotionEffects()) {
-            if (eff.getType() == PotionEffectType.INVISIBILITY) if (player.isOp()) {
+            if (eff.getType() == PotionEffectType.INVISIBILITY && player.isOp()) {
                 continue;
             }
             player.removePotionEffect(eff.getType());
@@ -54,8 +54,7 @@ public class BridgingAnalyzer extends JavaPlugin implements Listener {
         Inventory inv = p.getInventory();
         for (int i = 0; i < inv.getSize(); i++) {
             ItemStack item = inv.getItem(i);
-            if (item != null) if (item.getItemMeta() != null) if (item.getItemMeta().getDisplayName() != null)
-                if (item.getItemMeta().getDisplayName().contains("Key")) {
+            if (item != null && item.getItemMeta() != null && item.getItemMeta().getDisplayName() != null && item.getItemMeta().getDisplayName().contains("Key")) {
                     continue;
                 }
             inv.setItem(i, null);
@@ -184,13 +183,14 @@ public class BridgingAnalyzer extends JavaPlugin implements Listener {
     public void onEnable() {
         instance = this;
         Metrics metrics = new Metrics(this);
-        metrics.addCustomChart(new Metrics.SimplePie("distributeversion", () -> "Public-Bilibili-Final"));
+        metrics.addCustomChart(new Metrics.SimplePie("distributeversion", () -> "Open source"));
         blockSkinProvider = new DefaultBlockSkinProvider();
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(this, this);
         pluginManager.registerEvents(new CounterListener(), this);
         pluginManager.registerEvents(new HighlightListener(), this);
         pluginManager.registerEvents(new TriggerBlockListener(), this);
+        // 资源包
         // pluginManager.registerEvents(new ResourcePackLoader(), this);
         getCommand("bridge").setExecutor(new BridgeCommand());
         getCommand("clearblock").setExecutor(new ClearCommand());
@@ -205,13 +205,13 @@ public class BridgingAnalyzer extends JavaPlugin implements Listener {
 
         Bukkit.getConsoleSender().sendMessage(new String[]{
                 "§bBridgingAnalyzer §7>> §f----------------------------------------------------------------",
-                "§bBridgingAnalyzer §7>> §a骚操作练习插件 最终版 已加载 §bBy.SakuraKooi",
-                "§bBridgingAnalyzer §7>> §c此插件于Bilibili免费公开发布, §d谁买谁sb§c, 作者已退MC, 诸事勿扰",
+                "§bBridgingAnalyzer §7>> §a搭路练习 已加载 §bBy.SakuraKooi",
+                "§bBridgingAnalyzer §7>> §chttps://github.com/SakuraKoi/BridgingAnalyzer/",
                 "§bBridgingAnalyzer §7>> §f----------------------------------------------------------------",
                 "§bBridgingAnalyzer §7>> §e踩在 §a绿宝石块 §e上可以设置传送点",
                 "§bBridgingAnalyzer §7>> §e踩在 §c红石块 §e上可以回到传送点",
                 "§bBridgingAnalyzer §7>> §e踩在 §b青金石块 §e上可以回到出生点",
-                "§bBridgingAnalyzer §7>> §e放置 §a盔甲架 §e在下次启动服务器时会变为村民刷新点",
+                "§bBridgingAnalyzer §7>> §e使用 §a/genvillager §e可在站立位置创建村民刷新点",
                 "§bBridgingAnalyzer §7>> §c掉入虚空会自动回到 §a传送点 §c并重置地图",
                 "§bBridgingAnalyzer §7>> §c注意: 创造模式放置的方块不会被重置, 请在生存模式下练习",
                 "§bBridgingAnalyzer §7>> §f----------------------------------------------------------------"
@@ -222,7 +222,7 @@ public class BridgingAnalyzer extends JavaPlugin implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         e.getPlayer().sendMessage(new String[]{
                 "§b§l搭路练习 §7>> §e输入 §6/bridge §e更改练习参数",
-                "§b§l搭路练习 §7>> §c此插件于Bilibili免费公开发布 §7| Author.SakuraKooi"
+                "§b§l搭路练习 §7>> §6Bilibili @SakuraKooi"
         });
         if (e.getPlayer().hasPermission("bridginganalyzer.noclear")) return;
         teleportCheckPoint(e.getPlayer());
