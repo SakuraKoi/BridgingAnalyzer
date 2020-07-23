@@ -2,14 +2,7 @@ package sakura.kooi.BridgingAnalyzer;
 
 import lombok.Getter;
 import lombok.Setter;
-import sakura.kooi.BridgingAnalyzer.Utils.SoundMachine;
-import sakura.kooi.BridgingAnalyzer.Utils.Util;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-
 import org.bukkit.Bukkit;
-import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -17,119 +10,53 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitTask;
+import sakura.kooi.BridgingAnalyzer.Utils.SoundMachine;
+import sakura.kooi.BridgingAnalyzer.Utils.Util;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Counter {
-    public class BreakRunnable implements Runnable {
-        BukkitTask task;
-        ArrayList<Block> blocks = new ArrayList<Block>();
-
-        public BreakRunnable(final ArrayList<Block> allBlocks) {
-            blocks.addAll(allBlocks);
-            scheduledBreakBlocks.addAll(blocks);
-            if (blocks.isEmpty()) return;
-            int tick = 1 + (60 / blocks.size());
-            if (tick > 3) {
-                tick = 3;
-            }
-            task = Bukkit.getScheduler().runTaskTimer(BridgingAnalyzer.getInstance(), this, 10, tick);
-        }
-
-        @Override
-        public void run() {
-            if (!blocks.isEmpty()) {
-                Block b = null;
-                while (!blocks.isEmpty() && ((b == null) || (b.getType() == Material.AIR))) {
-                    b = blocks.get(0);
-                    scheduledBreakBlocks.remove(b);
-                    blocks.remove(0);
-                    BridgingAnalyzer.getPlacedBlocks().remove(b);
-                }
-                if (b != null) {
-                    Util.breakBlock(b);
-                    BridgingAnalyzer.getPlacedBlocks().remove(b);
-                }
-            } else {
-                task.cancel();
-            }
-        }
-    }
-
-    public static HashSet<Block> scheduledBreakBlocks = new HashSet<Block>();
-    private final ArrayList<Long> counterCPS = new ArrayList<Long>();
+    public static HashSet<Block> scheduledBreakBlocks = new HashSet<>();
+    private ArrayList<Long> counterCPS = new ArrayList<>();
     private int maxCPS = 0;
-    private final ArrayList<Long> counterBridge = new ArrayList<Long>();
+    private ArrayList<Long> counterBridge = new ArrayList<>();
     private double maxBridge = 0;
     private int currentLength = 0;
     private int maxLength = 0;
-
-    private final ArrayList<Block> allBlock = new ArrayList<Block>();
-
+    private ArrayList<Block> allBlock = new ArrayList<>();
     private Block lastBlock;
-
     private Location checkPoint = Bukkit.getWorld("world").getSpawnLocation().add(0.5, 1, 0.5);
-
-    private final Player player;
-
-    @Getter @Setter private boolean speedCountEnabled = true;
-    @Getter @Setter private boolean PvPEnabled = false;
-    @Getter @Setter private boolean highlightEnabled = true;
-    @Getter @Setter private boolean standBridgeMarkerEnabled = false;
-
-    public Counter(final Player p) {
+    private Player player;
+    @Getter
+    @Setter
+    private boolean speedCountEnabled = true;
+    @Getter
+    @Setter
+    private boolean PvPEnabled = false;
+    @Getter
+    @Setter
+    private boolean highlightEnabled = true;
+    @Getter
+    @Setter
+    private boolean standBridgeMarkerEnabled = false;
+    public Counter(Player p) {
         player = p;
     }
 
-    private void addItem(final PlayerInventory inv, final ItemStack item, final boolean add) {
-        if (isEmptySlot(item)) return;
-        if (item.getType().toString().endsWith("_HELMET")) {
-            // Material.DIAMOND_HELMET
-            if (isEmptySlot(inv.getHelmet())) {
-                inv.setHelmet(item);
-            } else if (add) {
-                inv.addItem(item);
-            }
-        } else if (item.getType().toString().endsWith("_CHESTPLATE")) {
-            // Material.DIAMOND_CHESTPLATE
-            if (isEmptySlot(inv.getChestplate())) {
-                inv.setChestplate(item);
-            } else if (add) {
-                inv.addItem(item);
-            }
-        } else if (item.getType().toString().endsWith("_LEGGINGS")) {
-            // Material.DIAMOND_LEGGINGS
-            if (isEmptySlot(inv.getLeggings())) {
-                inv.setLeggings(item);
-            } else if (add) {
-                inv.addItem(item);
-            }
-        } else if (item.getType().toString().endsWith("_BOOTS")) {
-            // Material.DIAMOND_BOOTS
-            if (isEmptySlot(inv.getBoots())) {
-                inv.setBoots(item);
-            } else if (add) {
-                inv.addItem(item);
-            }
-        } else {
-            inv.addItem(item);
-        }
-    }
-
-    public void addLogBlock(final Block block) {
+    public void addLogBlock(Block block) {
         allBlock.add(block);
         BridgingAnalyzer.getPlacedBlocks().put(block, block.getState().getData());
     }
 
     public void breakBlock() {
-        final ArrayList<Block> block = new ArrayList<Block>();
-        block.addAll(allBlock);
         scheduledBreakBlocks.addAll(allBlock);
-        new BreakRunnable(block);
+        new BreakRunnable(new ArrayList<>(allBlock));
         allBlock.clear();
     }
 
-    public void countBridge(final Block block) {
+    public void countBridge(Block block) {
         allBlock.add(block);
         BridgingAnalyzer.getPlacedBlocks().put(block, block.getState().getData());
         if ((lastBlock != null) && ((lastBlock.getY() + 1) != block.getY())) {
@@ -165,12 +92,11 @@ public class Counter {
         if (counterBridge.isEmpty()) {
             result = 0.00;
         } else {
-            final long peri = counterBridge.get(counterBridge.size() - 1) - counterBridge.get(0);
+            long peri = counterBridge.get(counterBridge.size() - 1) - counterBridge.get(0);
             if (peri > 1000L) {
                 result = counterBridge.size() / (peri / 1000.0);
                 if (result > maxBridge) {
                     maxBridge = Util.formatDouble(result);
-                    ;
                 }
             } else {
                 result = counterBridge.size();
@@ -196,20 +122,14 @@ public class Counter {
     }
 
     public void instantBreakBlock() {
-        for (final Block b : allBlock) {
+        for (Block b : allBlock) {
             Util.breakBlock(b);
             BridgingAnalyzer.getPlacedBlocks().remove(b);
         }
         allBlock.clear();
     }
 
-    private boolean isEmptySlot(final ItemStack item) {
-        if (item == null) return true;
-        if (item.getType() == Material.AIR) return true;
-        return false;
-    }
-
-    public void removeBlockRecord(final Block b) {
+    public void removeBlockRecord(Block b) {
         allBlock.remove(b);
         BridgingAnalyzer.getPlacedBlocks().remove(b);
     }
@@ -244,34 +164,34 @@ public class Counter {
         maxLength = 0;
     }
 
-    public void setCheckPoint(final Location loc) {
+    public void setCheckPoint(Location loc) {
         checkPoint = loc;
-        final Block target = loc.add(0, -1, 0).getBlock().getRelative(BlockFace.DOWN, 3);
+        Block target = loc.add(0, -1, 0).getBlock().getRelative(BlockFace.DOWN, 3);
         if (target.getType() == Material.CHEST) {
             BridgingAnalyzer.clearInventory(player);
-            final Chest chest = (Chest) target.getState();
-            for (final ItemStack stack : chest.getBlockInventory().getContents())
+            Chest chest = (Chest) target.getState();
+            for (ItemStack stack : chest.getBlockInventory().getContents())
                 if (stack != null) {
-                    addItem(player.getInventory(), stack.clone(), false);
+                    Util.addItem(player.getInventory(), stack.clone());
                 }
             player.getWorld().playSound(player.getLocation(), SoundMachine.get("ITEM_PICKUP", "ENTITY_ITEM_PICKUP"), 1,
-                                        1);
+                    1);
         }
 
     }
 
     public void teleportCheckPoint() {
         player.teleport(checkPoint);
-        final Block target = checkPoint.getBlock().getRelative(BlockFace.DOWN, 3);
+        Block target = checkPoint.getBlock().getRelative(BlockFace.DOWN, 3);
         if (target.getType() == Material.CHEST) {
             BridgingAnalyzer.clearInventory(player);
-            final Chest chest = (Chest) target.getState();
-            for (final ItemStack stack : chest.getBlockInventory().getContents())
+            Chest chest = (Chest) target.getState();
+            for (ItemStack stack : chest.getBlockInventory().getContents())
                 if (stack != null) {
-                    addItem(player.getInventory(), stack.clone(), false);
+                    Util.addItem(player.getInventory(), stack.clone());
                 }
             player.getWorld().playSound(player.getLocation(), SoundMachine.get("ITEM_PICKUP", "ENTITY_ITEM_PICKUP"), 1,
-                                        1);
+                    1);
         }
 
     }
@@ -280,12 +200,47 @@ public class Counter {
         counterCPS.clear();
         counterBridge.clear();
         currentLength = 0;
-        for (final Block b : allBlock)
+        for (Block b : allBlock)
             if (b.getType() != Material.AIR) {
                 b.setType(Material.SEA_LANTERN);
             }
         BridgingAnalyzer.teleportCheckPoint(player);
         breakBlock();
+    }
+
+    public class BreakRunnable implements Runnable {
+        BukkitTask task;
+        ArrayList<Block> blocks = new ArrayList<>();
+
+        public BreakRunnable(ArrayList<Block> allBlocks) {
+            blocks.addAll(allBlocks);
+            scheduledBreakBlocks.addAll(blocks);
+            if (blocks.isEmpty()) return;
+            int tick = 1 + (60 / blocks.size());
+            if (tick > 3) {
+                tick = 3;
+            }
+            task = Bukkit.getScheduler().runTaskTimer(BridgingAnalyzer.getInstance(), this, 10, tick);
+        }
+
+        @Override
+        public void run() {
+            if (!blocks.isEmpty()) {
+                Block b = null;
+                while (!blocks.isEmpty() && ((b == null) || (b.getType() == Material.AIR))) {
+                    b = blocks.get(0);
+                    scheduledBreakBlocks.remove(b);
+                    blocks.remove(0);
+                    BridgingAnalyzer.getPlacedBlocks().remove(b);
+                }
+                if (b != null) {
+                    Util.breakBlock(b);
+                    BridgingAnalyzer.getPlacedBlocks().remove(b);
+                }
+            } else {
+                task.cancel();
+            }
+        }
     }
 
 }
