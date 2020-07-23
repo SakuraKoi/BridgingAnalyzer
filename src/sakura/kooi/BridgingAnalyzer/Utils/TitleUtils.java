@@ -9,6 +9,8 @@ public class TitleUtils {
     private static String version = org.bukkit.Bukkit.getServer().getClass().getPackage().getName()
             .split("\\.")[3];
 
+    // 这个效率实在太低了, 但是我懒得改了, 性能洁癖的自己改吧 (又不是不能用.jpg
+
     private static Class<?> getNMSClass(String name) {
         try {
             return Class.forName("net.minecraft.server." + version + "." + name);
@@ -54,7 +56,6 @@ public class TitleUtils {
             try {
                 sendTitle(p, title, subtitle, fadeIn, stay, fadeOut);
             } catch (Exception e) {
-                // TODO �Զ���ɵ� catch ��
                 e.printStackTrace();
             }
         }
