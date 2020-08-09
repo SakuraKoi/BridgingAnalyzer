@@ -6,6 +6,8 @@ Minecraft Bridging Practice for Bedwars
 
 本项目使用了[Lombok](https://projectlombok.org/)完成Getter和Setter的代码生成, 请自行安装至IDE/构建工具以编译项目
 
+本插件使用bStats进行匿名使用统计, 构建的时候别特喵的删我统计类了喂!
+
 > 本插件以GPLv2协议发布
 >   
 > 你可以自由地使用或者传播本插件，也可以修改源代码再发布
