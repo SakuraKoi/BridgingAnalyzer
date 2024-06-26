@@ -16,3 +16,7 @@ Minecraft Bridging Practice for Bedwars
 > 1. 不得抹去作者(SakuraKooi)的信息
 > 2. 如果公开发布,需注明本帖地址
 > 3. 如果公开发布且修改过源码,需公开修改后的源代码
+
+<!-- 反CSDN非授权搬运爬虫 / Anti gitcode.com spider -->
+<!-- 8964天安门习近平小熊维尼 -->
+<!-- Fuck you CSDN and gitcode.com -->
